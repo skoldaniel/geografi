@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Levnadsstandard – Elevfrågor</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background: #f5f5f5;
+    }
+
+    h1 { text-align: center; margin-bottom: 20px; }
+    h2 { margin-top: 30px; font-size: 20px; }
+
+    /* --- Progress Bar Styling --- */
+    #progressContainer {
+        margin-bottom: 25px;
+        padding: 10px;
+        background: #e9e9e9;
+        border-radius: 6px;
+    }
+    #progressBar {
+        height: 100%; 
+        width: 0%; 
+        background-color: #4CAF50; /* Grön färg */
+        transition: width 0.4s ease-in-out;
+    }
+    #progressText {
+        font-weight: bold;
+        color: #333;
+    }
+
+
+    /* --- Accordion (Knapparna) --- */
+    .accordion {
+        background: #cfe8cc; /* sobert grön */
+        color: #000;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        text-align: left;
+        border: none;
+        outline: none;
+        font-size: 18px;
+        transition: 0.3s;
+        margin-top: 15px; 
+        border-radius: 6px;
+        border-left: 5px solid transparent;
+        position: relative;
+    }
+
+    .accordion.blue {
+        background: #c7d9ea; /* sobert blå */
+    }
+
+    /* Markering för aktiv knapp */
+    .active, .accordion:hover {
+        filter: brightness(95%);
+    }
+    
+    .accordion.active {
+        border-left: 5px solid #222; 
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Ikon för Ej besvarad (✖️) och Besvarad (✔️) */
+    .accordion::after {
+        content: '✖️'; /* Standardikon: ej besvarad */
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #ff3333; 
+        font-size: 14px;
+    }
+
+    .accordion.completed::after {
+        content: '✔️'; /* Ikon när frågan är besvarad */
+        color: #008000; 
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    /* --- Panel (Svarsrutan) --- */
+    .panel {
+        padding: 15px;
+        background: white;
+        display: none;
+        border-radius: 0 0 6px 6px;
+        border-top: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    textarea {
+        width: 100%;
+        height: 120px;
+        padding: 10px;
+        border-radius: 4px;
+        border: 1px solid #bbb;
+        resize: vertical;
+        box-sizing: border-box;
+    }
+
+    /* --- Sammanställningsrutan --- */
+    .summary-accordion {
+        background: #333;
+        color: white;
+        font-weight: bold;
+        border-left: 5px solid transparent;
+    }
+    
+    .summary-accordion.active {
+        border-left: 5px solid #ffcc00;
+    }
+    
+    .summary-panel {
+        background: #ffe699;
+        padding: 20px;
+    }
+
+    #pdfButton {
+        margin-top: 20px;
+        padding: 12px 18px;
+        font-size: 16px;
+        border: none;
+        background: #555;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+    #pdfButton:hover {
+        background: #333;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>Levnadsstandard – Frågor (s. 160–175)</h1>
+
+<div id="progressContainer">
+    <p>Framsteg: <span id="progressText">0 av 31 frågor besvarade</span></p>
+    <div style="background-color: #ddd; border-radius: 4px; height: 18px; overflow: hidden;">
+        <div id="progressBar" style="height: 100%; width: 0%; background-color: #4CAF50; transition: width 0.4s ease-in-out;"></div>
+    </div>
+</div>
+
+<button class="accordion"><strong>1.</strong> (s. 160) Vilka faktorer bestämmer levnadsstandarden?</button>
+<div class="panel"><textarea id="q1"></textarea></div>
+
+<button class="accordion blue"><strong>2.</strong> (s. 160) Varför har medellivslängden ökat i världen?</button>
+<div class="panel"><textarea id="q2"></textarea></div>
+
+<button class="accordion"><strong>3.</strong> (s. 161) Hur kan dålig tillgång till natur-, human- och kapitalresurser leda till mer fattigdom?</button>
+<div class="panel"><textarea id="q3"></textarea></div>
+
+<button class="accordion blue"><strong>4.</strong> (s. 161) Hur kan små ekonomiska resurser leda till mer fattigdom?</button>
+<div class="panel"><textarea id="q4"></textarea></div>
+
+<button class="accordion"><strong>5.</strong> (s. 161) Hur kan undernäring leda till mer fattigdom?</button>
+<div class="panel"><textarea id="q5"></textarea></div>
+
+<button class="accordion blue"><strong>6.</strong> (s. 162–163) Vad innebär det att leva i fattigdom?</button>
+<div class="panel"><textarea id="q6"></textarea></div>
+
+<button class="accordion"><strong>7.</strong> (s. 162–163) Hur mäts absolut fattigdom?</button>
+<div class="panel"><textarea id="q7"></textarea></div>
+
+<button class="accordion blue"><strong>8.</strong> (s. 162–163) Vilka fyra grupper delar Världsbanken in länder i efter inkomst?</button>
+<div class="panel"><textarea id="q8"></textarea></div>
+
+<button class="accordion"><strong>9.</strong> (s. 162–163) Var går gränsen för extrem fattigdom? Svara i US-dollar per dag.</button>
+<div class="panel"><textarea id="q9"></textarea></div>
+
+<button class="accordion blue"><strong>10.</strong> (s. 162–163) Hur många procent levde i extrem fattigdom i södra Asien 1990?</button>
+<div class="panel"><textarea id="q10"></textarea></div>
+
+<button class="accordion"><strong>11.</strong> (s. 164–165) Hur många miljoner människor levde i extrem fattigdom i Latinamerika och Karibien 2019?</button>
+<div class="panel"><textarea id="q11"></textarea></div>
+
+<button class="accordion blue"><strong>12.</strong> (s. 164–165) Vilka av Världsbankens regioner har haft den största minskningen av antalet personer som lever i extrem fattigdom?</button>
+<div class="panel"><textarea id="q12"></textarea></div>
+
+<button class="accordion"><strong>13.</strong> (s. 164–165) I vilka regioner har det skett en ökning av antalet människor som lever i extrem fattigdom?</button>
+<div class="panel"><textarea id="q13"></textarea></div>
+
+<button class="accordion blue"><strong>14.</strong> (s. 164–165) Hur mäts relativ fattigdom?</button>
+<div class="panel"><textarea id="q14"></textarea></div>
+
+<button class="accordion"><strong>15.</strong> (s. 164–165) Nämn två svårigheter med att bedriva jordbruk i tropiska klimat.</button>
+<div class="panel"><textarea id="q15"></textarea></div>
+
+<button class="accordion blue"><strong>16.</strong> (s. 164–165) Vad finns det för problem med att ha betesdjur i torra klimat?</button>
+<div class="panel"><textarea id="q16"></textarea></div>
+
+<button class="accordion"><strong>17.</strong> (s. 164–165) Hur kan återhämtingen av mark som har använts till svedjebruk påskyndas?</button>
+<div class="panel"><textarea id="q17"></textarea></div>
+
+<button class="accordion blue"><strong>18.</strong> (s. 164–165) Ge två förslag på hur odling i torra klimat kan göras bättre.</button>
+<div class="panel"><textarea id="q18"></textarea></div>
+
+<button class="accordion"><strong>19.</strong> (s. 166–167) Hur många saknar tillräcklig tillgång till bra dricksvatten?</button>
+<div class="panel"><textarea id="q19"></textarea></div>
+
+<button class="accordion blue"><strong>20.</strong> (s. 166–167) Ge ett exempel på hur vatten kan renas.</button>
+<div class="panel"><textarea id="q20"></textarea></div>
+
+<button class="accordion"><strong>21.</strong> (s. 168) Vad finns det för fördelar med att gå i skolan?</button>
+<div class="panel"><textarea id="q21"></textarea></div>
+
+<button class="accordion blue"><strong>22.</strong> (s. 168) Hur går det att få fler att gå i skolan?</button>
+<div class="panel"><textarea id="q22"></textarea></div>
+
+<button class="accordion"><strong>23.</strong> (s. 169) Ge ett förslag som skulle kunna förbättra arbetsförhållandena.</button>
+<div class="panel"><textarea id="q23"></textarea></div>
+
+<button class="accordion blue"><strong>24.</strong> (s. 170) Varför kan människor i fattiga länder ha svårt att låna pengar?</button>
+<div class="panel"><textarea id="q24"></textarea></div>
+
+<button class="accordion"><strong>25.</strong> (s. 170) Hur kan lån av pengar underlättas för människor i fattiga länder?</button>
+<div class="panel"><textarea id="q25"></textarea></div>
+
+<button class="accordion blue"><strong>26.</strong> (s. 171) Hur kan ett land komma till rätta med korruption?</button>
+<div class="panel"><textarea id="q26"></textarea></div>
+
+<button class="accordion"><strong>27.</strong> (s. 172) Varför drabbas personer som bor i fattiga länder mer av sjukdomar än de som bor i rika länder?</button>
+<div class="panel"><textarea id="q27"></textarea></div>
+
+<button class="accordion blue"><strong>28.</strong> (s. 173) Vilka två grupper är mest utsatta för fattigdom och ohälsa?</button>
+<div class="panel"><textarea id="q28"></textarea></div>
+
+<button class="accordion"><strong>29.</strong> (s. 173) Varför uppmärksammas just kvinnor och flickor i de globala målen för hållbar utveckling?</button>
+<div class="panel"><textarea id="q29"></textarea></div>
+
+<button class="accordion blue"><strong>30.</strong> (s. 174–175) Ange tre sjukdomar som många dör av i låginkomstländer.</button>
+<div class="panel"><textarea id="q30"></textarea></div>
+
+<button class="accordion"><strong>31.</strong> (s. 174–175) Extra fråga.</button>
+<div class="panel"><textarea id="q31"></textarea></div>
+
+
+<button class="accordion summary-accordion"><h2>Sammanställning av dina svar (Klicka för att se/dölja)</h2></button>
+<div class="panel summary-panel">
+    <div id="summaryBox">
+        <p><em>Inga svar har sparats ännu.</em></p>
+    </div>
+</div>
+
+<button id="pdfButton" onclick="window.print()">Exportera som PDF</button>
+
+<script>
+// Lista över ID:n för alla textfält (q1 till q31). 
+let fields = [];
+for (let i = 1; i <= 31; i++) {
+    fields.push("q" + i);
+}
+
+// Accordion handling for both Questions and Summary
+let acc = document.getElementsByClassName("accordion");
+
+for (let i = 0; i < acc.length; i++) {
+    acc[i].addEventListener("click", function () {
+        let currentPanel = this.nextElementSibling;
+        let isActive = this.classList.contains("active");
+        
+        // Stäng ALLA paneler (utom den klickade om den klickades igen)
+        for (let j = 0; j < acc.length; j++) {
+            // Kontrollera att elementet är en fråga/panel (dvs. inte sammanställningsknappen)
+            acc[j].classList.remove("active");
+            if(acc[j].nextElementSibling) {
+                acc[j].nextElementSibling.style.display = "none";
+            }
+        }
+        
+        // Öppna den klickade panelen om den var stängd
+        if (!isActive) {
+            this.classList.add("active");
+            if (currentPanel) {
+                currentPanel.style.display = "block";
+            }
+        }
+    });
+}
+
+// Autosave responses + live summary + Progress Logic
+
+function updateSummary() {
+    let out = "";
+    let answeredCount = 0;
+    const totalQuestions = fields.length;
+    
+    fields.forEach((id, index) => {
+        let val = localStorage.getItem(id) || "";
+        // Vi måste hantera alla element med klassen .accordion, så vi använder querySelectorAll
+        let button = document.querySelectorAll(".accordion")[index]; 
+
+        if(val.trim() !== ""){
+            answeredCount++;
+            
+            // --- Uppdatera Checkmark (✔️) ---
+            button.classList.add("completed"); 
+
+            let questionText = button.textContent.trim();
+            out += "<b>" + questionText + ":</b><br>" + val + "<br><br>";
+        } else {
+            // Se till att checkmarken tas bort om eleven raderar sitt svar
+            button.classList.remove("completed"); 
+        }
+    });
+    
+    // --- Uppdatera Global Progress Bar ---
+    const percentage = (answeredCount / totalQuestions) * 100;
+    document.getElementById("progressBar").style.width = percentage + '%';
+    document.getElementById("progressText").textContent = answeredCount + " av " + totalQuestions + " frågor besvarade";
+    
+    
+    // --- Uppdatera Sammanställningsrutan ---
+    if(out.trim() === "") {
+        document.getElementById("summaryBox").innerHTML = "<p><em>Inga svar har sparats ännu.</em></p>";
+    } else {
+        document.getElementById("summaryBox").innerHTML = out;
+    }
+}
+
+// Load saved data and attach listeners
+fields.forEach(id => {
+    let area = document.getElementById(id);
+
+    // Load saved text
+    area.value = localStorage.getItem(id) || "";
+
+    // Save on input
+    area.addEventListener("input", () => {
+        localStorage.setItem(id, area.value);
+        updateSummary();
+    });
+});
+
+// Initial summary load
+updateSummary();
+</script>
+
+</body>
+</html>
