@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vad är vädret?</title>
+    <style>
+        /* Tar bort standardmarginaler och sätter höjden till hela skärmen */
+        body, html {
+            height: 100%;
+            margin: 0;
+            overflow: hidden; /* Döljer scrollbars */
+            font-family: 'Arial Black', sans-serif;
+        }
+
+        body {
+            /* Centrerar innehållet vertikalt och horisontellt */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            /* NY BAKGRUND: En solid mörk färg istället för hamstrar */
+            background-color: #222; /* Mörkgrå bakgrund för bra kontrast */
+        }
+
+        /* Stilen för texten i mitten */
+        .center-text {
+            font-size: 5rem; /* Mycket stor text */
+            text-transform: uppercase; /* Stora bokstäver */
+            text-align: center;
+            font-weight: 900; /* Extra fet stil */
+            padding: 20px;
+            cursor: default; /* Ingen textmarkör */
+            
+            /* En tjock vit kontur runt texten gör att den "poppar" ut 
+               mot den mörka bakgrunden.
+            */
+            -webkit-text-stroke: 4px white; /* För Chrome/Safari */
+            text-stroke: 4px white;         /* Standard */
+            
+            /* Fallback-skugga om webbläsaren inte stöder text-stroke */
+            text-shadow: 
+                 4px  4px 0 #fff,
+                -4px  4px 0 #fff,
+                 4px -4px 0 #fff,
+                -4px -4px 0 #fff;
+
+            /* Startar blink-animationen */
+            animation: contrastBlink 0.8s infinite alternate;
+        }
+
+        /* Animationen som får textens fyllnadsfärg att blinka */
+        @keyframes contrastBlink {
+            0% {
+                color: black;
+            }
+            100% {
+                /* Slutfärg: Neonrosa */
+                color: #ff00ff;
+            }
+        }
+
+        /* Anpassning för mindre skärmar (mobiler) så texten inte blir för stor */
+        @media (max-width: 768px) {
+            .center-text {
+                font-size: 3rem;
+                -webkit-text-stroke: 2px white;
+                text-stroke: 2px white;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="center-text">Vad är vädret?</h1>
+
+</body>
+</html>
